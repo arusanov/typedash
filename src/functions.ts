@@ -1,15 +1,4 @@
-export type CurriedFunction1<T1, R> = (v1: T1) => R
-
-export interface CurriedFunction2<T1, T2, R> {
-  (v1: T1): (v2: T2) => R
-  (v1: T1, v2: T2): R
-}
-export interface CurriedFunction3<T1, T2, T3, R> {
-  (v1: T1): CurriedFunction2<T2, T3, R>
-  (v1: T1, v2: T2): (v3: T3) => R
-  (v1: T1, v2: T2, v3: T3): R
-}
-
+import {CurriedFunction1, CurriedFunction2, CurriedFunction3} from './typedash'
 function curry<T1, TResult> (fn: (a: T1) => TResult, n?: number): CurriedFunction1<T1, TResult>
 function curry<T1, T2, TResult> (fn: (a: T1, b: T2) => TResult, n?: number): CurriedFunction2<T1, T2, TResult>
 function curry<T1, T2, T3, TResult> (fn: (a: T1, b: T2, c: T3) => TResult, n?: number): CurriedFunction3<T1, T2, T3, TResult>
