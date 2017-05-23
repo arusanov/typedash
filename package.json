@@ -1,0 +1,110 @@
+{
+  "name": "typedash",
+  "version": "0.0.0-development",
+  "description": "",
+  "keywords": [],
+  "main": "dist/typedash.js",
+  "typings": "lib/typedash.d.ts",
+  "module": "lib/typedash.js",
+  "es:next": "lib/typedash.js",
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "author": "arusanov <alexander.rusanov@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arusanov/typedash.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "scripts": {
+    "lint": "tslint -e **/node_modules/** -e **/dist/** -e **/lib/** -t codeFrame **/*.ts ",
+    "prebuild": "rimraf dist && rimraf docs && rimraf lib",
+    "build": "tsc && cross-env NODE_ENV=production webpack -p",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
+    "deploy-docs": "node tools/gh-pages-publish.js",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "commit": "git-cz",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "prepush": "npm run test:prod && npm run build",
+    "commitmsg": "validate-commit-msg"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    },
+    "validate-commit-msg": {
+      "types": "conventional-commit-types",
+      "helpMessage": "Use \"npm run commit\" instead, we use conventional-changelog format :) (https://github.com/commitizen/cz-cli)"
+    }
+  },
+  "jest": {
+    "globals": {
+      "__TS_CONFIG__": {
+        "module": "commonjs"
+      }
+    },
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "modulePathIgnorePatterns": [
+      "/^((?!src).)/"
+    ],
+    "testResultsProcessor": "<rootDir>/node_modules/ts-jest/coverageprocessor.js",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
+  },
+  "devDependencies": {
+    "@types/jest": "^19.2.2",
+    "@types/node": "^7.0.2",
+    "@types/webpack": "^2.2.7",
+    "colors": "^1.1.2",
+    "commitizen": "^2.9.5",
+    "coveralls": "^2.11.15",
+    "cross-env": "^4.0.0",
+    "cz-conventional-changelog": "^2.0.0",
+    "husky": "^0.13.1",
+    "jest": "^19.0.2",
+    "prompt": "^1.0.0",
+    "replace-in-file": "^2.3.2",
+    "rimraf": "^2.5.4",
+    "rollup": "^0.41.6",
+    "rollup-plugin-memory": "^2.0.0",
+    "rollup-plugin-typescript": "^0.8.1",
+    "semantic-release": "^6.3.6",
+    "ts-jest": "^19.0.0",
+    "ts-loader": "^2.1.0",
+    "ts-node": "^3.0.0",
+    "tslint": "^5.0.0",
+    "tslint-config-standard": "^5.0.0",
+    "typedoc": "^0.7.0",
+    "typedoc-webpack-plugin": "^1.1.4",
+    "typescript": "^2.3.1",
+    "validate-commit-msg": "^2.10.1",
+    "webpack": "^2.2.0"
+  },
+  "dependencies": {
+    "tslib": "^1.6.1"
+  }
+}
