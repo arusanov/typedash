@@ -9,8 +9,7 @@
   "es:next": "lib/typedash.js",
   "files": [
     "dist",
-    "lib",
-    "src"
+    "lib"
   ],
   "author": "arusanov <alexander.rusanov@gmail.com>",
   "repository": {
