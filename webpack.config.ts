@@ -1,5 +1,4 @@
 const {join} = require('path')
-const TypedocWebpackPlugin = require('typedoc-webpack-plugin')
 const pkg = require('./package.json')
 
 const libraryName = pkg.name
@@ -39,14 +38,5 @@ module.exports = {
         ]
       }
     ]
-  },
-  plugins: [new TypedocWebpackPlugin(
-    {
-      theme: 'minimal',
-      out: 'docs',
-      target: 'es6',
-      ignoreCompilerErrors: true
-    },
-    'src'
-  )]
+  }
 }
