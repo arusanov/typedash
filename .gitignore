@@ -7,4 +7,5 @@ coverage
 .idea
 /dist/
 /lib/
+/docs/
 .awcache

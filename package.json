@@ -1,12 +1,17 @@
 {
   "name": "typedash",
   "version": "0.0.0-development",
-  "description": "",
+  "homepage": "https://arusanov.github.io/typedash/",
+  "description": "Minimal (and naive) implementation subset of lodash functions in typescript",
   "keywords": [],
+  "bugs": "https://github.com/arusanov/typedash/issues",
   "main": "dist/typedash.js",
   "typings": "lib/typedash.d.ts",
   "module": "lib/typedash.js",
-  "es:next": "lib/typedash.js",
+  "modules": [
+    "lib"
+  ],
+  "jsnext:main": "lib/typedash.js",
   "files": [
     "dist",
     "lib"
@@ -27,7 +32,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
-    "deploy-docs": "node tools/gh-pages-publish.js",
+    "docs": "typedoc --out ./docs --mode modules --target es5 --module umd src/",
+    "deploy-docs": "npm run prepush && npm run docs && node tools/gh-pages-publish.js",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "commit": "git-cz",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
@@ -98,7 +104,6 @@
     "tslint": "^5.0.0",
     "tslint-config-standard": "^5.0.0",
     "typedoc": "^0.7.0",
-    "typedoc-webpack-plugin": "^1.1.4",
     "typescript": "^2.3.1",
     "validate-commit-msg": "^2.10.1",
     "webpack": "^2.2.0"

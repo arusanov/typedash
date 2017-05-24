@@ -1,17 +1,40 @@
 import {identity} from './functions'
 import {contains} from './arrays'
+
+/***
+ * Get object keys from `item`
+ * @param item The object to get keys from
+ * @returns {string[]} Object keys
+ */
 export function keys<T extends object> (item: T): (keyof T)[] {
   return Object.keys(item) as (keyof T)[]
 }
 
+/***
+ * Is object empty (no keys)
+ * @param item The object to check
+ * @returns {boolean}
+ */
 export function isEmpty (item?: Object | Array<any>): boolean {
   return !item || (Array.isArray(item) && !item.length) || !keys(item).length
 }
 
+/***
+ * Get object key values from `item`
+ * @param item The object to get keys from
+ * @returns {V[]} Object values
+ */
 export function values<V, T extends { [key: string]: V }> (item: T): V[] {
   return keys(item).reduce((res: V[], key) => res.concat(item[key]), [])
 }
 
+/***
+ * Create new object with mapped key/value from `item`
+ * @param item
+ * @param mapKeyFn Function to map keys
+ * @param mapValueFn Function to map values
+ * @returns {[p:string]: V}
+ */
 export function mapKeyValues<V, T extends { [key: string]: V }, R> (item: T,
                                                                     mapKeyFn: (key: (keyof T)) => string,
                                                                     mapValueFn: (value: V) => R): { [key: string]: R } {
@@ -21,14 +44,32 @@ export function mapKeyValues<V, T extends { [key: string]: V }, R> (item: T,
   }, {})
 }
 
+/***
+ * Create new object with mapped keys from `item`
+ * @param item
+ * @param mapKeyFn Function to map key
+ * @returns {{[p: string]: V}}
+ */
 export function mapKeys<V, T extends { [key: string]: V }> (item: T, mapKeyFn: (key: (keyof T)) => string): { [key: string]: V } {
   return mapKeyValues<V, T, V>(item, mapKeyFn, identity)
 }
 
+/***
+ * Create new object with mapped values from `item`
+ * @param item
+ * @param mapValueFn Function to map values
+ * @returns {{[p: string]: R}}
+ */
 export function mapValues<V, T extends { [key: string]: V }, R> (item: T, mapValueFn: <R>(value: V) => R): { [key: string]: R } {
   return mapKeyValues<V, T, R>(item, identity, mapValueFn)
 }
 
+/***
+ * Reduce `item` keys and creates new object
+ * @param item
+ * @param reduceFn Reduce function
+ * @returns {{[p: string]: any}}
+ */
 export function reduce<V, T extends { [key: string]: V }, R> (item: T,
                                                               reduceFn: (key: (keyof T), value: V) => R): { [key: string]: R } {
   return keys(item).reduce((res: { [key: string]: R }, key) => {
@@ -37,6 +78,12 @@ export function reduce<V, T extends { [key: string]: V }, R> (item: T,
   }, {})
 }
 
+/***
+ * Filter `item` keys and create new object
+ * @param item
+ * @param filterFn
+ * @returns {Partial<any>}
+ */
 export function filter<T extends object> (item: T,
                                           filterFn: (key: (keyof T)) => boolean): Partial<T> {
   return keys(item).reduce((res: Partial<T>, key) => {
@@ -47,10 +94,22 @@ export function filter<T extends object> (item: T,
   }, {})
 }
 
+/***
+ * Omit keys from `item` and return new object
+ * @param item
+ * @param keys The keys to exclude
+ * @returns {Partial<T>}
+ */
 export function omit<T extends object> (item: T, keys: (keyof T)[]): Partial<T> {
   return filter(item, (key: (keyof T)) => !contains(keys, key))
 }
 
+/***
+ * Pick keys from `item` and return new object
+ * @param item
+ * @param keys The keys to include
+ * @returns {Partial<T>}
+ */
 export function pick<T extends object> (item: T, keys: (keyof T)[]): Partial<T> {
   return filter(item, (key: (keyof T)) => contains(keys, key))
 }
@@ -100,6 +159,18 @@ function mergeObject<T extends Object, S extends Object> (target: T, source: S):
   return destination
 }
 
+/***
+ * This method is like Object.assign except that it recursively merges own and inherited enumerable string
+ * keyed properties of source objects into the destination object.
+ * Source properties that resolve to undefined are skipped if a destination value exists.
+ * Array and plain object properties are merged recursively.
+ * Other objects and value types are overridden by assignment.
+ * Source objects are applied from left to right.
+ * Subsequent sources overwrite property assignments of previous sources.
+ * @param target
+ * @param source
+ * @returns {object|Array}
+ */
 export function merge<T, S> (target: T, source: S): T & S | Array<T | S> {
   if (Array.isArray(source)) {
     return Array.isArray(target) ? arrayMerge(target, source) : cloneIfNecessary(source)
@@ -108,10 +179,23 @@ export function merge<T, S> (target: T, source: S): T & S | Array<T | S> {
   }
 }
 
+/***
+ * Creates a patch for `old` using values from `patch`
+ * @example `patch({a:1,b:2}, {a:1,b:3,c:4}) === {b:3,c:4}`
+ * @param old
+ * @param patch
+ * @returns {Partial<Partial<any>>}
+ */
 export function patch<T extends object> (old: T, patch: Partial<T>): Partial<T> {
   return filter(patch, (key) => patch[key] !== old[key])
 }
 
+/***
+ * Check object keys equality
+ * @param objA
+ * @param objB
+ * @returns {boolean}
+ */
 export function shallowEqual (objA: Object, objB: Object) {
   if (objA === objB) {
     return true
