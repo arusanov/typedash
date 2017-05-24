@@ -1,5 +1,5 @@
-import {identity} from './functions'
 import {contains} from './arrays'
+import {identity} from './functions'
 
 /***
  * Get object keys from `item`
@@ -100,7 +100,7 @@ export function filter<T extends object> (item: T,
  * @param keys The keys to exclude
  * @returns {Partial<T>}
  */
-export function omit<T extends object> (item: T, keys: (keyof T)[]): Partial<T> {
+export function omit<T extends object> (item: T, keys: (keyof T | string)[]): Partial<T> {
   return filter(item, (key: (keyof T)) => !contains(keys, key))
 }
 
@@ -110,7 +110,7 @@ export function omit<T extends object> (item: T, keys: (keyof T)[]): Partial<T> 
  * @param keys The keys to include
  * @returns {Partial<T>}
  */
-export function pick<T extends object> (item: T, keys: (keyof T)[]): Partial<T> {
+export function pick<T extends object> (item: T, keys: (keyof T | string)[]): Partial<T> {
   return filter(item, (key: (keyof T)) => contains(keys, key))
 }
 

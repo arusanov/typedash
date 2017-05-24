@@ -22,7 +22,7 @@ export function concat<T> (...item: (T | T[])[]): T[] {
  * @param array The array to flatten.
  * @returns {T[]} Return Flattened array.
  */
-export function flatten<T> (array: T[] | T[][]): T[] {
+export function flatten<T> (array: (T|T[])[]): T[] {
   return [].concat.apply([], array)
 }
 
