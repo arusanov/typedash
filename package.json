@@ -61,7 +61,6 @@
     "modulePathIgnorePatterns": [
       "/^((?!src).)/"
     ],
-    "testResultsProcessor": "<rootDir>/node_modules/ts-jest/coverageprocessor.js",
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/test/"
@@ -82,10 +81,10 @@
     "colors": "^1.1.2",
     "commitizen": "^2.9.5",
     "coveralls": "^2.11.15",
-    "cross-env": "^4.0.0",
+    "cross-env": "^5.0.0",
     "cz-conventional-changelog": "^2.0.0",
     "husky": "^0.13.1",
-    "jest": "^19.0.2",
+    "jest": "^20.0.3",
     "prompt": "^1.0.0",
     "replace-in-file": "^2.3.2",
     "rimraf": "^2.5.4",
@@ -93,7 +92,7 @@
     "rollup-plugin-memory": "^2.0.0",
     "rollup-plugin-typescript": "^0.8.1",
     "semantic-release": "^6.3.6",
-    "ts-jest": "^19.0.0",
+    "ts-jest": "^20.0.4",
     "ts-loader": "^2.1.0",
     "ts-node": "^3.0.0",
     "tslint": "^5.0.0",
