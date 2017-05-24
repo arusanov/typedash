@@ -61,7 +61,6 @@
     "modulePathIgnorePatterns": [
       "/^((?!src).)/"
     ],
-    "testResultsProcessor": "<rootDir>/node_modules/ts-jest/coverageprocessor.js",
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/test/"

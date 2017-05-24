@@ -10,10 +10,15 @@ notifications:
   email: false
 node_js:
   - '6.4'
+before_install:
+  - npm install -g npm
+  - npm install -g greenkeeper-lockfile@1
 before_script:
+  - greenkeeper-lockfile-update
   - npm prune && npm cache clean
 script:
   - npm run test:prod && npm run build
+after_script: greenkeeper-lockfile-upload
 after_success:
   - npm run report-coverage
   - npm run deploy-docs
