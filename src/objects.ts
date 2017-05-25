@@ -1,4 +1,4 @@
-import {contains} from './arrays'
+import {concat, contains, forEach, isArray} from './arrays'
 import {identity} from './functions'
 
 /***
@@ -16,7 +16,7 @@ export function keys<T extends object> (item: T): (keyof T)[] {
  * @returns {boolean}
  */
 export function isEmpty (item?: Object | Array<any>): boolean {
-  return !item || (Array.isArray(item) && !item.length) || !keys(item).length
+  return !item || (isArray(item) && !item.length) || !keys(item).length
 }
 
 /***
@@ -25,7 +25,7 @@ export function isEmpty (item?: Object | Array<any>): boolean {
  * @returns {V[]} Object values
  */
 export function values<V, T extends { [key: string]: V }> (item: T): V[] {
-  return keys(item).reduce((res: V[], key) => res.concat(item[key]), [])
+  return keys(item).reduce((res: V[], key) => concat(res, item[key]), [])
 }
 
 /***
@@ -113,15 +113,16 @@ export function omit<T extends object> (item: T, keys: (keyof T | string)[]): Pa
 export function pick<T extends object> (item: T, keys: (keyof T | string)[]): Partial<T> {
   return filter(item, (key: (keyof T)) => contains(keys, key))
 }
+const toString = Object.prototype.toString
 
 function isMergeableObject<T> (val: T): boolean {
   return val && typeof val === 'object'
-    && Object.prototype.toString.call(val) !== '[object RegExp]'
-    && Object.prototype.toString.call(val) !== '[object Date]'
+    && toString.call(val) !== '[object RegExp]'
+    && toString.call(val) !== '[object Date]'
 }
 
 function emptyTarget<T> (val: T) {
-  return Array.isArray(val) ? [] : {}
+  return isArray(val) ? [] : {}
 }
 
 function cloneIfNecessary<T extends object> (value: T): T {
@@ -130,7 +131,7 @@ function cloneIfNecessary<T extends object> (value: T): T {
 
 function arrayMerge<T extends Array<any>, S extends Array<any>> (target: T, source: S): Array<T | S> {
   const destination = target.slice()
-  source.forEach(function (e, i) {
+  forEach(source, function (e, i) {
     if (typeof destination[i] === 'undefined') {
       destination[i] = cloneIfNecessary(e)
     } else if (isMergeableObject(e)) {
@@ -145,11 +146,11 @@ function arrayMerge<T extends Array<any>, S extends Array<any>> (target: T, sour
 function mergeObject<T extends Object, S extends Object> (target: T, source: S): T & S {
   const destination: any = {}
   if (isMergeableObject(target)) {
-    keys(target).forEach(function (key) {
+    forEach(keys(target), function (key) {
       destination[key] = cloneIfNecessary(target[key])
     })
   }
-  keys(source).forEach(function (key: keyof T | keyof S) {
+  forEach(keys(source), function (key: keyof T | keyof S) {
     if (!isMergeableObject(source[key as keyof S]) || !target[key as keyof T]) {
       destination[key] = cloneIfNecessary(source[key as keyof S])
     } else {
@@ -172,8 +173,8 @@ function mergeObject<T extends Object, S extends Object> (target: T, source: S):
  * @returns {object|Array}
  */
 export function merge<T, S> (target: T, source: S): T & S | Array<T | S> {
-  if (Array.isArray(source)) {
-    return Array.isArray(target) ? arrayMerge(target, source) : cloneIfNecessary(source)
+  if (isArray(source)) {
+    return isArray(target) ? arrayMerge(target, source) : cloneIfNecessary(source)
   } else {
     return mergeObject(target, source)
   }

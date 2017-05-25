@@ -1,3 +1,4 @@
+import {argumentsArray, concat} from './arrays'
 import {CurriedFunction1, CurriedFunction2, CurriedFunction3} from './typedash'
 
 /***
@@ -11,20 +12,16 @@ export function curry<T1, TResult> (fn: (a: T1) => TResult, n?: number): Curried
 export function curry<T1, T2, TResult> (fn: (a: T1, b: T2) => TResult, n?: number): CurriedFunction2<T1, T2, TResult>
 export function curry<T1, T2, T3, TResult> (fn: (a: T1, b: T2, c: T3) => TResult, n?: number): CurriedFunction3<T1, T2, T3, TResult>
 export function curry (f: Function, n?: number): Function {
-  const args = argsArray(arguments)
+  const argsArray = argumentsArray(arguments)
   if (typeof n === 'undefined') {
-    args[1] = f.length
+    argsArray[1] = f.length
   }
-  if (n === args.length - 2) {
-    return f.apply(undefined, args.slice(2))
+  if (n === argsArray.length - 2) {
+    return f.apply(undefined, argsArray.slice(2))
   }
   return function () {
-    return curry.apply(undefined, args.concat(argsArray(arguments)))
+    return curry.apply(undefined, concat(argsArray, argumentsArray(arguments)))
   }
-}
-
-function argsArray (argsObject: IArguments): any[] {
-  return Array.prototype.slice.call(argsObject, 0)
 }
 
 /***
@@ -54,7 +51,7 @@ export function identity<T> (i: T) {
  * @returns {Function}
  */
 export function debounce<T extends Function> (func: T, wait: number, immediate: boolean = false): T {
-  let timeout: number | null
+  let timeout: any
   return function (this: any) {
     const context = this
     const args = arguments
@@ -64,7 +61,7 @@ export function debounce<T extends Function> (func: T, wait: number, immediate: 
     }
     const callNow = immediate && !timeout
     clearTimeout(timeout!)
-    timeout = window.setTimeout(later, wait)
+    timeout = setTimeout(later, wait)
     if (callNow) func.apply(context, args)
   } as any as T
 }

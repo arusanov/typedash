@@ -1,3 +1,4 @@
+import {templateObject} from '../src/strings'
 import * as strings from '../src/typedash'
 
 describe('Strings test', () => {
@@ -85,9 +86,20 @@ describe('Strings test', () => {
   })
 
   it('template', () => {
-    const tmpl = strings.template('Hel"lo ${boy||""}')
+    const tmpl = strings.template('Hel"lo ${boy}')
     expect(tmpl).toBeInstanceOf(Function)
-    expect(tmpl({boy: 'John'})).toBe('Hel"lo John')
-    expect(tmpl({bos: 'John'})).toBe('Hel"lo ')
+    expect(tmpl(templateObject({boy: 'John'}))).toEqual(['Hel"lo ', 'John', ''])
+    expect(tmpl(templateObject({bos: 'John'}, 'none'))).toEqual(['Hel"lo ', 'none', ''])
+    const tmpl2 = strings.template('Hello, ${firstName} ${lastName}!!!')
+    expect(tmpl2).toBeInstanceOf(Function)
+    expect(tmpl2(templateObject({firstName: 'John', lastName: 'Doe'})).join('')).toBe('Hello, John Doe!!!')
+    expect(tmpl2(templateObject({firstName: 'John', lastName: 2})).join('')).toBe('Hello, John 2!!!')
+    expect(tmpl2(templateObject({firstName: 'John', lastName: null})).join('')).toBe('Hello, John !!!')
+    expect(tmpl2(templateObject({firstName: 'John'})).join('')).toBe('Hello, John !!!')
+
+    const tmpl3 = strings.template('Hello ${arg}')
+    expect(tmpl3).toBeInstanceOf(Function)
+    expect(tmpl3(() => 'Argh!').join('')).toBe('Hello Argh!')
+
   })
 })

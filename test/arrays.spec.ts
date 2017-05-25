@@ -30,9 +30,4 @@ describe('Arrays test', () => {
     expect(arrays.difference(['foo', 'bar','bar', 'baz'], ['baz', 'bar', 'fox']))
       .toEqual(['foo', 'fox'])
   })
-
-  it('toggle', () => {
-    expect(arrays.toggle(['foo', 'bar'], ['foo', 'baz']))
-      .toEqual(['bar', 'baz'])
-  })
 })

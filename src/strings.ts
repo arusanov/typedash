@@ -93,16 +93,32 @@ export function wildcardToRegExp (wildcardPattern: string, flags?: string): RegE
  * Compile string template into template function.
  * Template language is similar to template strings in es6 `Hello ${name}`.
  * Doesn't support anything but property name inside `${}`
- * @example Use `template('Hello ${name}')({name:'Bob'})==='Hello Bob'`
+ * @example Use `template('Hello ${name}')(templateObject({name:'Bob'}))==='Hello Bob'`
  * @param template The template string
- * @returns {(data:Object)=>string} Compiled template function.
+ * @returns {(data:<T>(key: keyof T) => string)=>string} Compiled template function.
  */
-export function template (template: string): (data: object) => string {
-  const sanitized = template
-    .split(/(\${[\s]*[^;\s{]+[\s]*})/g)
-    .map(item => {
-      const varMatch = /\${([\s]*[^;\s{]+[\s]*)}/.exec(item)
-      return varMatch ? `($d.${varMatch[1]})` : `"${item.replace('"', '\\"')}"`
-    })
-  return Function('$d', `return ${sanitized.join('+')}`) as (data: object) => string
+export function template<T> (template: string): (data: <T>(key: keyof T) => T) => (string | T)[] {
+  const sanitized = template.split(/(\${([\s]*[^;\s{]+[\s]*)})/g)
+
+  let fn = 'return ['
+  for (let i = 0; i < sanitized.length; i++) {
+    if (sanitized[i][0] === '$') {
+      fn += `$d('${sanitized[++i]}'),`
+    } else {
+      fn += `"${sanitized[i].replace('"', '\\"')}",`
+    }
+  }
+  return Function('$d', `${fn}]`) as (data: <T>(key: keyof T) => T) => (string | T)[]
+}
+
+/***
+ * Function to use with `template` return object keys by template key
+ * @param value
+ * @param nullValue
+ * @returns {(key:keyof T)=>string?}
+ */
+export function templateObject<T> (value: { [key: string]: T }, nullValue?: T): (key: string) => T {
+  return function (key: string) {
+    return value[key] || nullValue
+  }
 }

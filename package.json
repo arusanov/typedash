@@ -6,12 +6,14 @@
   "keywords": [],
   "bugs": "https://github.com/arusanov/typedash/issues",
   "main": "dist/typedash.js",
+  "dev:main": "dist/typedash.dev.js",
+  "minified:main": "dist/typedash.min.js",
+  "jsnext:main": "lib/typedash.js",
   "typings": "lib/typedash.d.ts",
   "module": "lib/typedash.js",
   "modules": [
     "lib"
   ],
-  "jsnext:main": "lib/typedash.js",
   "files": [
     "dist",
     "lib"
@@ -28,7 +30,11 @@
   "scripts": {
     "lint": "tslint -e **/node_modules/** -e **/dist/** -e **/lib/** -t codeFrame **/*.ts ",
     "prebuild": "rimraf dist && rimraf docs && rimraf lib",
-    "build": "tsc && cross-env NODE_ENV=production webpack -p",
+    "build": "npm run bundle && npm run optimize && npm run minify && npm run size",
+    "bundle": "tsc && rollup -f umd -m dist/typedash.dev.js.map -n typedash -o dist/typedash.dev.js lib/typedash.js",
+    "optimize": "uglifyjs dist/typedash.dev.js -c conditionals=false,sequences=false,loops=false,join_vars=false,collapse_vars=false -b width=120,quote_style=3 -o dist/typedash.js -p relative --in-source-map dist/typedash.dev.js.map --source-map dist/typedash.js.map",
+    "minify": "uglifyjs dist/typedash.js -c collapse_vars,evaluate,screw_ie8,unsafe,loops=false,keep_fargs=false,pure_getters,unused,dead_code -m -o dist/typedash.min.js -p relative --in-source-map dist/typedash.js.map --source-map dist/typedash.min.js.map",
+    "size": "node -e \"process.stdout.write('gzip size: ')\" && gzip-size dist/typedash.min.js",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
@@ -83,30 +89,27 @@
   "devDependencies": {
     "@types/jest": "^19.2.2",
     "@types/node": "^7.0.2",
-    "@types/webpack": "^2.2.7",
     "colors": "^1.1.2",
     "commitizen": "^2.9.5",
     "coveralls": "^2.11.15",
-    "cross-env": "^5.0.0",
     "cz-conventional-changelog": "^2.0.0",
+    "gzip-size-cli": "^2.0.0",
     "husky": "^0.13.1",
     "jest": "^20.0.3",
     "prompt": "^1.0.0",
     "replace-in-file": "^2.3.2",
     "rimraf": "^2.5.4",
     "rollup": "^0.41.6",
-    "rollup-plugin-memory": "^2.0.0",
-    "rollup-plugin-typescript": "^0.8.1",
+    "rollup-plugin-node-resolve": "^3.0.0",
     "semantic-release": "^6.3.6",
     "ts-jest": "^20.0.4",
-    "ts-loader": "^2.1.0",
     "ts-node": "^3.0.0",
     "tslint": "^5.0.0",
     "tslint-config-standard": "^5.0.0",
     "typedoc": "^0.7.0",
     "typescript": "^2.3.1",
-    "validate-commit-msg": "^2.10.1",
-    "webpack": "^2.2.0"
+    "uglify-js": "^2.7.5",
+    "validate-commit-msg": "^2.10.1"
   },
   "dependencies": {
     "tslib": "^1.6.1"

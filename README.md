@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/arusanov/typedash.svg?branch=master)](https://travis-ci.org/arusanov/typedash)
 [![Coverage Status](https://coveralls.io/repos/github/arusanov/typedash/badge.svg?branch=master)](https://coveralls.io/github/arusanov/typedash?branch=master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/arusanov/typedash.svg)](https://greenkeeper.io/)
+[![gzip size](http://img.badgesize.io/https://unpkg.com/typedash/dist/typedash.min.js?compression=gzip)](https://unpkg.com/typedash/dist/typedash.js)
 
 Minimal (and naive) implementation subset of lodash functions in typescript
 
