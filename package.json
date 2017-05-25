@@ -39,7 +39,7 @@
     "test:watch": "jest --watch",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
     "docs": "typedoc --out ./docs --mode modules --target es5 --module umd src/",
-    "deploy-docs": "npm run prepush && npm run docs && node tools/gh-pages-publish.js",
+    "deploy-docs": "node tools/gh-pages-publish.js",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "commit": "git-cz",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",

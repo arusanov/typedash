@@ -21,5 +21,6 @@ script:
 after_script: greenkeeper-lockfile-upload
 after_success:
   - npm run report-coverage
+  - npm run docs
   - npm run deploy-docs
   - npm run semantic-release
