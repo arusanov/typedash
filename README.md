@@ -18,7 +18,7 @@ $ npm i typedash
 
 ### Usage
 
-From TypeScript (using webpack2 or rollup)
+From TypeScript/es6 (using webpack2 or rollup)
 
 ```typescript
 import {noop} from 'typedash'
