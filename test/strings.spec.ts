@@ -16,12 +16,14 @@ describe('Strings test', () => {
 
   it('snakeCase', () => {
     expect(strings.snakeCase('Foo Bar')).toBe('foo_bar')
+    expect(strings.snakeCase('fooBar')).toBe('foo_bar')
     expect(strings.snakeCase('--foo-bar--')).toBe('foo_bar')
     expect(strings.snakeCase('__FOO_BAR__')).toBe('foo_bar')
   })
 
   it('kebabCase', () => {
     expect(strings.kebabCase('Foo Bar')).toBe('foo-bar')
+    expect(strings.kebabCase('fooBar')).toBe('foo-bar')
     expect(strings.kebabCase('--foo-bar--')).toBe('foo-bar')
     expect(strings.kebabCase('__FOO_BAR__')).toBe('foo-bar')
   })

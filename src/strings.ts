@@ -2,13 +2,16 @@ import {curry} from './functions'
 
 const asciiWords = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g
 
+const unicodeWords = /[A-Z\xc0-\xd6\xd8-\xde]?[a-z\xdf-\xf6\xf8-\xff]+(?=[\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf \t\x0b\f\xa0\n\r]|[A-Z\xc0-\xd6\xd8-\xde]|$)|(?:[A-Z\xc0-\xd6\xd8-\xde])+(?=[\xac\xb1\xd7\xf7\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\xbf \t\x0b\f\xa0\n\r]|[A-Z\xc0-\xd6\xd8-\xde](?:[a-z\xdf-\xf6\xf8-\xff])|$)|[A-Z\xc0-\xd6\xd8-\xde]?(?:[a-z\xdf-\xf6\xf8-\xff])+|[A-Z\xc0-\xd6\xd8-\xde]+|\d+/g
+const hasUnicodeWord = /[a-z][A-Z]|[A-Z]{2,}[a-z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]|[^a-zA-Z0-9 ]/
+
 /***
- * Spit string into words, unicode is not supported
+ * Spit string into words
  * @param str The string to split
  * @returns {RegExpMatchArray|[]} Matched words
  */
-export function words (str?: string): string[] {
-  return (str && str.match(asciiWords)) || []
+export function words (str?: string | null): string[] {
+  return (str && str.match(hasUnicodeWord.test(str) ? unicodeWords : asciiWords)) || []
 }
 
 function mapWords (str: string, wordMapFn: (word: string, i: number) => string | undefined, join: string = ''): string {
