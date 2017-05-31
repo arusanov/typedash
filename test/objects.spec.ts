@@ -294,9 +294,7 @@ describe('Objects test', () => {
     })
 
     it('should treat objects created by `Object.create(null)` like any other plain object', () => {
-      function Foo () { this.a = 1 }
-
-      Foo.prototype.constructor = null
+      class Foo { a = 1 }
 
       const object2 = {'a': 1}
       expect(shallowequal(new Foo(), object2)).toEqual(true)

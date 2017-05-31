@@ -28,7 +28,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "lint": "tslint -e **/node_modules/** -e **/dist/** -e **/lib/** -t codeFrame **/*.ts ",
+    "lint": "tslint --type-check -p tsconfig.test.json -e **/node_modules/** -e **/dist/** -e **/lib/** -t codeFrame **/*.ts ",
     "prebuild": "rimraf dist && rimraf docs && rimraf lib",
     "build": "npm run bundle && npm run optimize && npm run minify && npm run size",
     "bundle": "tsc && rollup -f umd -m dist/typedash.dev.js.map -n typedash -o dist/typedash.dev.js lib/typedash.js",

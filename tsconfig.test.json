@@ -1,24 +1,7 @@
 {
-  "compilerOptions": {
-    "outDir": "lib",
-    "declaration": true,
-    "moduleResolution": "node",
-    "module": "es6",
-    "target": "es5",
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "importHelpers": true,
-    "lib": [
-      "es5",
-      "dom"
-    ],
-    "strict": true,
-    "sourceMap": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ]
-  },
+  "extends":"./tsconfig.json",
   "include": [
-    "src"
+    "src",
+    "test"
   ]
 }

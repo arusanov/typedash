@@ -15,7 +15,7 @@ export function keys<T extends object> (item: T): (keyof T)[] {
  * @param item The object to check
  * @returns {boolean}
  */
-export function isEmpty (item?: Object | Array<any>): boolean {
+export function isEmpty (item?: Object | Array<any> | null): boolean {
   return !item || (isArray(item) && !item.length) || !keys(item).length
 }
 
@@ -197,7 +197,7 @@ export function patch<T extends object> (old: T, patch: Partial<T>): Partial<T> 
  * @param objB
  * @returns {boolean}
  */
-export function shallowEqual (objA: Object, objB: Object) {
+export function shallowEqual (objA: Object | null | undefined, objB: Object | null | undefined) {
   if (objA === objB) {
     return true
   }
