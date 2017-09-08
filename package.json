@@ -56,11 +56,6 @@
     }
   },
   "jest": {
-    "globals": {
-      "__TS_CONFIG__": {
-        "module": "commonjs"
-      }
-    },
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
@@ -88,25 +83,25 @@
   },
   "devDependencies": {
     "@types/jest": "^20.0.0",
-    "@types/node": "^8.0.1",
+    "@types/node": "^8.0.0",
     "colors": "^1.1.2",
     "commitizen": "^2.9.5",
     "coveralls": "^2.11.15",
     "cz-conventional-changelog": "^2.0.0",
     "gzip-size-cli": "^2.0.0",
-    "husky": "^0.13.1",
-    "jest": "^20.0.3",
+    "husky": "^0.14.0",
+    "jest": "^21.0.0",
     "prompt": "^1.0.0",
     "replace-in-file": "^2.3.2",
     "rimraf": "^2.5.4",
-    "rollup": "^0.43.0",
+    "rollup": "^0.49",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "semantic-release": "^6.3.6",
-    "ts-jest": "^20.0.4",
+    "semantic-release": "^7.0.0",
+    "ts-jest": "^21.0.0",
     "ts-node": "^3.0.0",
     "tslint": "^5.0.0",
     "tslint-config-standard": "^6.0.0",
-    "typedoc": "^0.7.0",
+    "typedoc": "^0.8.0",
     "typescript": "2.3.4",
     "uglify-js": "^3.0.14",
     "validate-commit-msg": "^2.10.1"
