@@ -1,4 +1,4 @@
-import * as arrays from '../src/typedash'
+const arrays = require('../src/typedash')
 
 describe('Arrays test', () => {
   it('compact', () => {

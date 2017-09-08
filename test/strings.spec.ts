@@ -1,5 +1,5 @@
-import {templateObject} from '../src/strings'
-import * as strings from '../src/typedash'
+const templateObject = require('../src/strings').templateObject
+const strings = require('../src/typedash')
 
 describe('Strings test', () => {
   it('words', () => {

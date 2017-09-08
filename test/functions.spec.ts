@@ -1,4 +1,4 @@
-import * as functions from '../src/typedash'
+const functions = require('../src/typedash')
 
 describe('Functions test', () => {
   it('curry', () => {

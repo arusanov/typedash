@@ -1,4 +1,4 @@
-import {curry} from './functions'
+import { curry } from './functions'
 
 const asciiWords = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g
 
@@ -121,8 +121,8 @@ export function template<T> (template: string): (data: (key: string) => T) => st
  * @param nullValue
  * @returns {(key:keyof T)=>string?}
  */
-export function templateObject<T> (value: { [key: string]: T }, nullValue?: T): (key: string) => T {
+export function templateObject<T> (value: { [key: string]: T | null }, nullValue?: T): (key: string) => T {
   return function (key: string): T {
-    return value[key] || nullValue
+    return value[key] || nullValue!
   }
 }

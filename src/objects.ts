@@ -1,5 +1,5 @@
-import {concat, contains, forEach, isArray} from './arrays'
-import {identity} from './functions'
+import { concat, contains, forEach, isArray } from './arrays'
+import { identity } from './functions'
 
 /***
  * Get object keys from `item`
@@ -60,7 +60,7 @@ export function mapKeys<V, T extends { [key: string]: V }> (item: T, mapKeyFn: (
  * @param mapValueFn Function to map values
  * @returns {{[p: string]: R}}
  */
-export function mapValues<V, T extends { [key: string]: V }, R> (item: T, mapValueFn: <R>(value: V) => R): { [key: string]: R } {
+export function mapValues<R, V, T extends { [key: string]: V }> (item: T, mapValueFn: (value: V) => R): { [key: string]: R } {
   return mapKeyValues<V, T, R>(item, identity, mapValueFn)
 }
 
@@ -113,6 +113,7 @@ export function omit<T extends object> (item: T, keys: (keyof T | string)[]): Pa
 export function pick<T extends object> (item: T, keys: (keyof T | string)[]): Partial<T> {
   return filter(item, (key: (keyof T)) => contains(keys, key))
 }
+
 const toString = Object.prototype.toString
 
 function isMergeableObject<T> (val: T): boolean {

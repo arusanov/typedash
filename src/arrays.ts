@@ -1,4 +1,4 @@
-import {identity} from './functions'
+import { identity } from './functions'
 
 const arrayPrototype = Array.prototype
 /***

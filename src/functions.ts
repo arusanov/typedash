@@ -1,5 +1,5 @@
-import {argumentsArray, concat} from './arrays'
-import {CurriedFunction1, CurriedFunction2, CurriedFunction3} from './typedash'
+import { argumentsArray, concat } from './arrays'
+import { CurriedFunction1, CurriedFunction2, CurriedFunction3 } from './typedash'
 
 /***
  * Creates a function that accepts arguments of func and either invokes func returning its result,

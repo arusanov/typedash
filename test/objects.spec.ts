@@ -1,4 +1,4 @@
-import * as objects from '../src/typedash'
+const objects = require('../src/typedash')
 
 describe('Objects test', () => {
   it('isEmpty', () => {
@@ -20,7 +20,10 @@ describe('Objects test', () => {
   })
 
   it('mapValues', () => {
-    expect(objects.mapValues({a: 1, b: 2}, (val: number) => val + 1)).toEqual({a: 2, b: 3})
+    expect(objects.mapValues({
+      a: 1,
+      b: 2
+    }, (val: number) => val + 1)).toEqual({a: 2, b: 3})
     expect(objects.mapValues({a: 'foo', b: 'bar'}, (val: string) => `${val}z`)).toEqual({a: 'fooz', b: 'barz'})
   })
 
@@ -294,7 +297,7 @@ describe('Objects test', () => {
     })
 
     it('should treat objects created by `Object.create(null)` like any other plain object', () => {
-      class Foo { a = 1 }
+      class Foo {a = 1}
 
       const object2 = {'a': 1}
       expect(shallowequal(new Foo(), object2)).toEqual(true)

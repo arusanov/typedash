@@ -29,7 +29,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "lint": "tslint --type-check -p tsconfig.test.json -e **/node_modules/** -e **/dist/** -e **/lib/** -t codeFrame **/*.ts ",
+    "lint": "tslint --type-check -p tsconfig.json -e **/node_modules/** -e **/dist/** -e **/lib/** -e **/test/** -t codeFrame **/*.ts ",
     "prebuild": "rimraf dist && rimraf docs && rimraf lib",
     "build": "npm run bundle && npm run minify && npm run size",
     "bundle": "tsc && rollup -f umd -m dist/typedash.dev.js.map -n typedash -o dist/typedash.js lib/typedash.js",
@@ -66,10 +66,12 @@
       "js"
     ],
     "modulePathIgnorePatterns": [
-      "/^((?!src).)/"
+      "/^((?!src).)/",
+      "/^((?!lib).)/"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
+      "/lib/",
       "/test/"
     ],
     "coverageThreshold": {
