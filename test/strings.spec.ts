@@ -90,7 +90,8 @@ describe('Strings test', () => {
   it('template', () => {
     const tmpl = strings.template('Hel"lo ${boy}')
     expect(tmpl).toBeInstanceOf(Function)
-    expect(tmpl(templateObject({boy: 'John'}))).toEqual(['Hel"lo ', 'John', ''])
+    const tmpObj = templateObject({boy: 'John'})
+    expect(tmpl(tmpObj)).toEqual(['Hel"lo ', 'John', ''])
     expect(tmpl(templateObject({bos: 'John'}, 'none'))).toEqual(['Hel"lo ', 'none', ''])
     const tmpl2 = strings.template('Hello, ${firstName} ${lastName}!!!')
     expect(tmpl2).toBeInstanceOf(Function)

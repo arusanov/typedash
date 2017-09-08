@@ -26,6 +26,7 @@ function mapWords (str: string, wordMapFn: (word: string, i: number) => string |
 export function lowerCase (s: string) {
   return s.toLowerCase()
 }
+
 function caseStr (casing: string, str: string): string {
   return mapWords(str, lowerCase, casing)
 }
@@ -100,7 +101,7 @@ export function wildcardToRegExp (wildcardPattern: string, flags?: string): RegE
  * @param template The template string
  * @returns {(data:<T>(key: keyof T) => string)=>string} Compiled template function.
  */
-export function template<T> (template: string): (data: <T>(key: keyof T) => T) => (string | T)[] {
+export function template<T> (template: string): (data: (key: string) => T) => string[] {
   const sanitized = template.split(/(\${([\s]*[^;\s{]+[\s]*)})/g)
 
   let fn = 'return ['
@@ -111,7 +112,7 @@ export function template<T> (template: string): (data: <T>(key: keyof T) => T) =
       fn += `"${sanitized[i].replace('"', '\\"')}",`
     }
   }
-  return Function('$d', `${fn}]`) as (data: <T>(key: keyof T) => T) => (string | T)[]
+  return Function('$d', `${fn}]`) as (data: (key: string) => T) => string[]
 }
 
 /***
@@ -121,7 +122,7 @@ export function template<T> (template: string): (data: <T>(key: keyof T) => T) =
  * @returns {(key:keyof T)=>string?}
  */
 export function templateObject<T> (value: { [key: string]: T }, nullValue?: T): (key: string) => T {
-  return function (key: string) {
+  return function (key: string): T {
     return value[key] || nullValue
   }
 }
