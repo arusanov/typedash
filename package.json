@@ -11,6 +11,7 @@
   "jsnext:main": "lib/typedash.js",
   "typings": "lib/typedash.d.ts",
   "module": "lib/typedash.js",
+  "pure-module": true,
   "modules": [
     "lib"
   ],
