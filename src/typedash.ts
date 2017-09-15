@@ -2,6 +2,7 @@ export * from './arrays'
 export * from './objects'
 export * from './functions'
 export * from './strings'
+export * from './templates'
 
 export type CurriedFunction1<T1, R> = (v1: T1) => R
 

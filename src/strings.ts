@@ -92,37 +92,3 @@ export function wildcardToRegExp (wildcardPattern: string, flags?: string): RegE
     .replace(/\+/g, '.+?')
   return new RegExp(`^${pattern}$`, flags)
 }
-
-/***
- * Compile string template into template function.
- * Template language is similar to template strings in es6 `Hello ${name}`.
- * Doesn't support anything but property name inside `${}`
- * @example Use `template('Hello ${name}')(templateObject({name:'Bob'}))==='Hello Bob'`
- * @param template The template string
- * @returns {(data:<T>(key: keyof T) => string)=>string} Compiled template function.
- */
-export function template<T> (template: string): (data: (key: string) => T) => string[] {
-  const sanitized = template.split(/(\${([\s]*[^;\s{]+[\s]*)})/g)
-
-  let fn = 'return ['
-  for (let i = 0; i < sanitized.length; i++) {
-    if (sanitized[i][0] === '$') {
-      fn += `$d('${sanitized[++i]}'),`
-    } else {
-      fn += `"${sanitized[i].replace('"', '\\"')}",`
-    }
-  }
-  return Function('$d', `${fn}]`) as (data: (key: string) => T) => string[]
-}
-
-/***
- * Function to use with `template` return object keys by template key
- * @param value
- * @param nullValue
- * @returns {(key:keyof T)=>string?}
- */
-export function templateObject<T> (value: { [key: string]: T | null }, nullValue?: T): (key: string) => T {
-  return function (key: string): T {
-    return value[key] || nullValue!
-  }
-}
