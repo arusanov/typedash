@@ -10,7 +10,7 @@ cache:
 notifications:
   email: false
 node_js:
-  - '6.4'
+  - '8.5'
 before_install:
   - npm install -g greenkeeper-lockfile@1
 before_script:
