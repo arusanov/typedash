@@ -23,7 +23,7 @@ export function template (template: string, {dataName = '$__', outName = 'out'}:
   let cursor = 0
   let match
   const add = function (line: string, js?: boolean) {
-    js ? (code += line.match(reExp) ? line + '\n' : `${outName}.push(` + line + ');\n') : (code += line !== '' ? `${outName}.push("` + line.replace(/"/g, '\\"') + '");\n' : '')
+    js ? (code += line.match(reExp) ? line + '\n' : `try{${outName}.push(` + line + ')}catch(_unused){};\n') : (code += line !== '' ? `${outName}.push("` + line.replace(/"/g, '\\"') + '");\n' : '')
     return add
   }
 

@@ -6,6 +6,11 @@ describe('Templates test', () => {
     expect(tmpl({boy: 'George'})).toEqual('Hello George')
   })
 
+  it('template undefined', () => {
+    const tmpl = templates.template('Hello {{boy}}')
+    expect(tmpl({})).toEqual('Hello ')
+  })
+
   it('template object deep', () => {
     const tmpl = templates.template('Hello {{boy.firstName}} {{boy.lastName}}')
     expect(tmpl({boy: {firstName: 'George', lastName: 'Michael'}})).toEqual('Hello George Michael')
