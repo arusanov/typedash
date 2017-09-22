@@ -65,9 +65,9 @@
   version "9.1.10"
   resolved "https://registry.yarnpkg.com/@types/highlight.js/-/highlight.js-9.1.10.tgz#b621f809cd9573b80992b90cffc5788208e3069c"
 
-"@types/jest@^20.0.0":
-  version "20.0.8"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-20.0.8.tgz#7f8c97f73d20d3bf5448fbe33661a342002b5954"
+"@types/jest@21.1.0":
+  version "21.1.0"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-21.1.0.tgz#cacaa3822b548d8faa7130cf847b6f5417c32ddf"
 
 "@types/lodash@^4.14.37":
   version "4.14.74"
