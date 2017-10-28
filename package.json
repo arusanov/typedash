@@ -103,7 +103,7 @@
     "ts-jest": "^21.0.0",
     "ts-node": "^3.0.0",
     "tslint": "^5.0.0",
-    "tslint-config-standard": "^6.0.0",
+    "tslint-config-standard": "^7.0.0",
     "typedoc": "^0.8.0",
     "typescript": "^2.5.2",
     "uglify-js": "^3.0.14",
