@@ -62,7 +62,7 @@ export function capitalize (str: string): string {
 export function camelCase (str: string): string {
   return mapWords(str, (word, i) => {
     word = lowerCase(word)
-    return i === 0 ? word : capitalize(word!)
+    return i === 0 ? word : capitalize(word)
   })
 }
 

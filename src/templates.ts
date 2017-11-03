@@ -16,7 +16,7 @@ export interface TemplateOptions {
  * @param {{dataName:string,outName:string}}? options Options for template
  * @returns {(data: any) => string} Template function
  */
-export function template (template: string, {dataName = '$__', outName = 'out'}: Partial<TemplateOptions> = {}): (data: any) => string {
+export function template (template: string, { dataName = '$__', outName = 'out' }: Partial<TemplateOptions> = {}): (data: any) => string {
   const re = /{{(.+?)}}/g
   const reExp = /(^( )?(if|for|else|switch|case|break|{|}))(.*)?/g
   let code = `with(${dataName}) {var ${outName}=[];\n`
