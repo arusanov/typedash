@@ -99,7 +99,7 @@
     "rimraf": "^2.5.4",
     "rollup": "^0.51.0",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "semantic-release": "^8.0.0",
+    "semantic-release": "^11.0.2",
     "ts-jest": "^21.0.0",
     "ts-node": "^3.0.0",
     "tslint": "^5.0.0",
