@@ -116,7 +116,7 @@ export function pick<T extends object> (item: T, keys: (keyof T | string)[]): Pa
 
 const toString = Object.prototype.toString
 
-function isMergeableObject<T> (val: T): boolean {
+function isMergeableObject (val: any): val is object|RegExp|Date {
   return val && typeof val === 'object'
     && toString.call(val) !== '[object RegExp]'
     && toString.call(val) !== '[object Date]'
@@ -126,7 +126,7 @@ function emptyTarget<T> (val: T) {
   return isArray(val) ? [] : {}
 }
 
-function cloneIfNecessary<T extends object> (value: T): T {
+function cloneIfNecessary<T> (value: T): T {
   return (isMergeableObject(value)) ? merge(emptyTarget(value), value) as T : value
 }
 
