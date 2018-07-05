@@ -91,7 +91,7 @@
     "commitizen": "^2.9.5",
     "coveralls": "^3.0.0",
     "cz-conventional-changelog": "^2.0.0",
-    "gzip-size-cli": "^2.0.0",
+    "gzip-size-cli": "^3.0.0",
     "husky": "^0.14.0",
     "jest": "^22.0.0",
     "prompt": "^1.0.0",
