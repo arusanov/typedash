@@ -25,7 +25,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "lint": "tslint --fix -p tsconfig.json -e **/node_modules/** -e **/dist/** -e **/lib/** -e **/test/** -t codeFrame **/*.ts ",
+    "lint": "tslint --fix -p tsconfig.json -e **/node_modules/** -e **/lib/** -e **/test/** -t codeFrame **/*.ts ",
     "prebuild": "rimraf lib",
     "build": "microbundle",
     "test": "jest",
