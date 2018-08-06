@@ -61,7 +61,7 @@ export function mapKeys<V, T extends { [key: string]: V }> (item: T, mapKeyFn: (
  * @returns {{[p: string]: R}}
  */
 export function mapValues<R, V, T extends { [key: string]: V }> (item: T, mapValueFn: (value: V) => R): { [key: string]: R } {
-  return mapKeyValues<V, T, R>(item, identity, mapValueFn)
+  return mapKeyValues<V, T, R>(item, identity as any, mapValueFn)
 }
 
 /***
@@ -72,7 +72,7 @@ export function mapValues<R, V, T extends { [key: string]: V }> (item: T, mapVal
  */
 export function reduce<V, T extends { [key: string]: V }, R> (item: T,
                                                               reduceFn: (key: (keyof T), value: V) => R): { [key: string]: R } {
-  return keys(item).reduce((res: { [key: string]: R }, key) => {
+  return keys(item).reduce((res: { [key in keyof T]?: R }, key) => {
     res[key] = reduceFn(key, item[key])
     return res
   }, {})
@@ -116,7 +116,7 @@ export function pick<T extends object> (item: T, keys: (keyof T | string)[]): Pa
 
 const toString = Object.prototype.toString
 
-function isMergeableObject (val: any): val is object|RegExp|Date {
+function isMergeableObject (val: any): val is object | RegExp | Date {
   return val && typeof val === 'object'
     && toString.call(val) !== '[object RegExp]'
     && toString.call(val) !== '[object Date]'

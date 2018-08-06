@@ -5,18 +5,13 @@
   "description": "Minimal (and naive) implementation subset of lodash functions in typescript",
   "keywords": [],
   "bugs": "https://github.com/arusanov/typedash/issues",
-  "main": "dist/typedash.js",
-  "dev:main": "dist/typedash.dev.js",
-  "minified:main": "dist/typedash.min.js",
-  "jsnext:main": "lib/typedash.js",
+  "umd:main": "lib/typedash.umd.js",
+  "source": "src/typedash.ts",
+  "main": "lib/typedash.js",
   "typings": "lib/typedash.d.ts",
-  "module": "lib/typedash.js",
-  "pure-module": true,
-  "modules": [
-    "lib"
-  ],
+  "module": "lib/typedash.mjs",
+  "side-effects": false,
   "files": [
-    "dist",
     "lib",
     "src"
   ],
@@ -31,11 +26,8 @@
   },
   "scripts": {
     "lint": "tslint --fix -p tsconfig.json -e **/node_modules/** -e **/dist/** -e **/lib/** -e **/test/** -t codeFrame **/*.ts ",
-    "prebuild": "rimraf dist && rimraf docs && rimraf lib",
-    "build": "npm run bundle && npm run minify && npm run size",
-    "bundle": "tsc && rollup -f umd -m dist/typedash.dev.js.map -n typedash -o dist/typedash.js lib/typedash.js",
-    "minify": "uglifyjs -c collapse_vars,evaluate,unsafe,loops=false,keep_fargs=false,pure_getters,unused,dead_code -m -o dist/typedash.min.js --source-map -- dist/typedash.js",
-    "size": "node -e \"process.stdout.write('gzip size: ')\" && gzip-size dist/typedash.min.js",
+    "prebuild": "rimraf lib",
+    "build": "microbundle",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
@@ -43,9 +35,10 @@
     "deploy-docs": "node tools/gh-pages-publish.js",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "commit": "git-cz",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "semantic-release": "semantic-release",
     "prepush": "npm run test:prod && npm run build",
-    "commitmsg": "validate-commit-msg"
+    "commitmsg": "validate-commit-msg",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "config": {
     "commitizen": {
@@ -57,8 +50,9 @@
     }
   },
   "jest": {
+    "testEnvironment": "node",
     "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      ".(ts|tsx)": "ts-jest"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
@@ -85,29 +79,26 @@
     }
   },
   "devDependencies": {
-    "@types/jest": "^22.0.0",
-    "@types/node": "^8.0.0",
+    "@types/jest": "^23.0.0",
+    "@types/node": "^10.0.0",
     "colors": "^1.1.2",
     "commitizen": "^2.9.5",
     "coveralls": "^3.0.0",
     "cz-conventional-changelog": "^2.0.0",
-    "gzip-size-cli": "^2.0.0",
     "husky": "^0.14.0",
-    "jest": "^22.0.0",
+    "jest": "^23.0.0",
+    "microbundle": "^0.6.0",
     "prompt": "^1.0.0",
-    "replace-in-file": "^3.0.0",
     "rimraf": "^2.5.4",
-    "rollup": "^0.58.0",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "semantic-release": "^15.0.0",
-    "ts-jest": "^22.0.0",
-    "ts-node": "^6.0.0",
+    "semantic-release": "^15.9.5",
+    "ts-jest": "^23.0.0",
+    "ts-node": "^7.0.0",
     "tslint": "^5.0.0",
     "tslint-config-standard": "^7.0.0",
     "typedoc": "^0.11.0",
-    "typescript": "^2.0.0",
-    "uglify-js": "^3.0.14",
-    "validate-commit-msg": "^2.10.1"
+    "typescript": "^3.0.0",
+    "validate-commit-msg": "^2.10.1",
+    "travis-deploy-once": "^5.0.2"
   },
   "dependencies": {
     "tslib": "^1.0.0"
