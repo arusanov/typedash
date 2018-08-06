@@ -6,9 +6,13 @@ notifications:
   email: false
 node_js:
   - '10'
-  - '8'
+jobs:
+  include:
+    - stage: Produce Coverage
+      node_js: node
+      script: jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
 after_success:
-  - npm run travis-deploy-once "npm run semantic-release && npm run report-coverage && npm run docs && npm run deploy-docs"
+  - npm run travis-deploy-once "npm run semantic-release && npm run docs && npm run deploy-docs"
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
