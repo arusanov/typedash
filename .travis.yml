@@ -11,11 +11,8 @@ jobs:
     - stage: Produce Coverage
       node_js: node
       script: jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
-    - stage: deploy
-      node_js: node
-      script: npm run build
 after_success:
-  - npm run travis-deploy-once "npm run semantic-release && npm run docs && npm run deploy-docs"
+  - npm run travis-deploy-once "npm run build && npm run semantic-release && npm run docs && npm run deploy-docs"
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
