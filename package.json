@@ -12,8 +12,8 @@
   "module": "lib/typedash.mjs",
   "side-effects": false,
   "files": [
-    "lib",
-    "src"
+    "lib/",
+    "src/"
   ],
   "author": "arusanov <alexander.rusanov@gmail.com>",
   "repository": {
